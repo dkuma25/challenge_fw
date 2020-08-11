@@ -1,0 +1,98 @@
+{% load static %}
+
+<link rel="stylesheet" type="text/css" href="{% static 'api_sync/basic_style.css' %}">
+
+<div>
+    <ul class="menu">
+        <li>
+            <a href="#" id="show_post">POSTAGENS</a>
+        </li>
+        <li>
+            <a href="#" id="show_album">ALBUNS</a>
+        </li>
+        <li>
+            <a href="#" id="show_todo">TO-DOs</a>
+        </li>
+    </ul>
+</div>
+
+{% if album_list %}
+    <table id="album_tb" class="table">
+    <tr>
+        <th>Id</th>
+        <th>UserId</th>
+        <th>Title</th>
+    </tr>
+    {% for album in album_list %}
+    <tr>
+        <td class="centered">{{ album.id }}</td>
+        <td class="centered">{{ album.userId }}</td>
+        <td>{{ album.title }}</td>
+    </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p id="album_tb" class="table">Nenhum album disponível.</p>
+{% endif %}
+
+{% if post_list %}
+    <table id="post_tb" class="table">
+        <th>Id</th>
+        <th>UserId</th>
+        <th>Title</th>
+    {% for post in post_list %}
+    <tr>
+        <td class="centered">{{ post.id }}</td>
+        <td class="centered">{{ post.userId }}</td>
+        <td><a href="{% url 'api_sync:post' post.id %}">{{ post.title }}</a></td>
+    </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p id="post_tb" class="table">Nenhum post disponível.</p>
+{% endif %}
+
+{% if todo_list %}
+    <table id="todo_tb" class="table">
+        <th>Id</th>
+        <th>UserId</th>
+        <th>Title</th>
+        <th>Completed</th>
+    {% for todo in todo_list %}
+    <tr>
+        <td class="centered">{{ todo.id }}</td>
+        <td class="centered">{{ todo.userId }}</td>
+        <td>{{ todo.title }}</td>
+        <td class="centered">
+            <input id="{{ todo.id }}" type="radio" value="{{ todo.completed }}" disabled>
+            <label for="{{ todo.id }}"></label>
+        </td>
+    </tr>
+    {% endfor %}
+    </table>
+{% else %}
+    <p id="todo_tb" class="table">Nenhum to-do disponível.</p>
+{% endif %}
+<script type="text/javascript">
+    post_btn = document.querySelector('#show_post');
+    post_btn.addEventListener('click', function (e) {
+        document.querySelectorAll('.table').forEach(function (table) {
+            table.style.display = "none";
+        });
+        document.querySelector('#post_tb').style.display = "block";
+    });
+    album_btn = document.querySelector('#show_album');
+    album_btn.addEventListener('click', function (e) {
+        document.querySelectorAll('.table').forEach(function (table) {
+            table.style.display = "none";
+        });
+        document.querySelector('#album_tb').style.display = "block";
+    });
+    todo_btn = document.querySelector("#show_todo");
+    todo_btn.addEventListener('click', function (e) {
+        document.querySelectorAll('.table').forEach(function (table) {
+            table.style.display = "none";
+        });
+        document.querySelector('#todo_tb').style.display = "block";
+    })
+</script>

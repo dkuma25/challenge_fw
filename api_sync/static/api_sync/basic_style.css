@@ -1,0 +1,28 @@
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+th,td {
+    padding: 15px;
+}
+
+.centered {
+    text-align: center;
+}
+
+.menu {
+    float: left;
+    padding-right: 30px;
+    list-style-type: none;
+}
+
+.menu li {
+    white-space: nowrap;
+    display: list-item;
+    margin-bottom: 5px;
+}
+
+.table {
+    display: none;
+}
